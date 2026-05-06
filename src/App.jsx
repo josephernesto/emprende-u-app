@@ -5,12 +5,14 @@ import Home from './pages/Home'
 import Landing from './pages/Landing'
 import StudentLogin from './pages/StudentLogin'
 import StudentRegister from './pages/StudentRegister'
+import { products as initialProducts } from './data/mockData'
 
 const normalizeText = (value) => value.trim().replace(/\s+/g, ' ').toLowerCase()
 
 const demoStudent = {
   firstName: 'Alvaro',
   lastName: 'Vasquez',
+  studentCode: 'U1111111',
   university: 'Universidad Nacional de San Agustín (UNSA)',
   password: '123456',
 }
@@ -18,6 +20,7 @@ const demoStudent = {
 const demoSeller = {
   firstName: 'Emprendedor',
   lastName: 'Universitario',
+  businessName: 'Demo Campus',
   university: 'Universidad Tecnológica del Perú (UTP)',
   accessIp: '192.168.1.10',
   password: '123456',
@@ -36,6 +39,7 @@ function App() {
   const [registeredEntrepreneurs, setRegisteredEntrepreneurs] = useState([
     demoSeller,
   ])
+  const [marketplaceProducts, setMarketplaceProducts] = useState(initialProducts)
 
   const enterHome = (profile) => {
     setStudent(profile)
@@ -91,18 +95,17 @@ function App() {
     enterHome(entrepreneurProfile)
   }
 
-  const loginStudent = ({ fullName, password }) => {
-    const normalizedFullName = normalizeText(fullName)
-    const foundStudent = registeredStudents.find((registeredStudent) => {
-      const registeredFullName = normalizeText(
-        `${registeredStudent.firstName} ${registeredStudent.lastName}`,
-      )
+  const publishProduct = (product) => {
+    setMarketplaceProducts((current) => [product, ...current])
+  }
 
-      return (
-        registeredFullName === normalizedFullName &&
-        registeredStudent.password === password
-      )
-    })
+  const loginStudent = ({ studentCode, password }) => {
+    const normalizedStudentCode = normalizeText(studentCode)
+    const foundStudent = registeredStudents.find(
+      (registeredStudent) =>
+        normalizeText(registeredStudent.studentCode || '') ===
+          normalizedStudentCode && registeredStudent.password === password,
+    )
 
     if (!foundStudent) {
       return false
@@ -171,6 +174,8 @@ function App() {
         student={student}
         onLogout={logout}
         onUpdateProfile={updateProfile}
+        productCatalog={marketplaceProducts}
+        onPublishProduct={publishProduct}
       />
     )
   }

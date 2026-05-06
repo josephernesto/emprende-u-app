@@ -1,10 +1,18 @@
-import { ArrowLeft, GraduationCap, LockKeyhole, Phone, UserRound } from 'lucide-react'
+import {
+  ArrowLeft,
+  GraduationCap,
+  Hash,
+  LockKeyhole,
+  Phone,
+  UserRound,
+} from 'lucide-react'
 import { useState } from 'react'
 import { universities } from '../data/mockData'
 
 const initialForm = {
   firstName: '',
   lastName: '',
+  studentCode: '',
   age: '',
   phone: '',
   password: '',
@@ -25,6 +33,7 @@ function StudentRegister({ onBack, onRegister }) {
       ...form,
       firstName: form.firstName.trim(),
       lastName: form.lastName.trim(),
+      studentCode: form.studentCode.trim(),
       phone: form.phone.trim(),
     })
   }
@@ -58,7 +67,7 @@ function StudentRegister({ onBack, onRegister }) {
           <span className="mb-1.5 block text-sm font-extrabold text-black">
             Nombre
           </span>
-          <div className="flex h-13 items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-sm">
+          <div className="flex h-[50px] items-center gap-3 rounded-2xl bg-white px-4 shadow-sm">
             <UserRound size={19} className="shrink-0 text-orange-500" />
             <input
               type="text"
@@ -75,7 +84,7 @@ function StudentRegister({ onBack, onRegister }) {
           <span className="mb-1.5 block text-sm font-extrabold text-black">
             Apellidos
           </span>
-          <div className="flex h-13 items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-sm">
+          <div className="flex h-[50px] items-center gap-3 rounded-2xl bg-white px-4 shadow-sm">
             <UserRound size={19} className="shrink-0 text-orange-500" />
             <input
               type="text"
@@ -83,6 +92,23 @@ function StudentRegister({ onBack, onRegister }) {
               onChange={(event) => updateField('lastName', event.target.value)}
               required
               placeholder="Escribe tus apellidos"
+              className="min-w-0 flex-1 bg-transparent text-sm font-bold text-black outline-none placeholder:text-zinc-400"
+            />
+          </div>
+        </label>
+
+        <label className="block">
+          <span className="mb-1.5 block text-sm font-extrabold text-black">
+            CodigoEstudiante
+          </span>
+          <div className="flex h-[50px] items-center gap-3 rounded-2xl bg-white px-4 shadow-sm">
+            <Hash size={18} className="shrink-0 text-orange-500" />
+            <input
+              type="text"
+              value={form.studentCode}
+              onChange={(event) => updateField('studentCode', event.target.value)}
+              required
+              placeholder="Ej. U1111111"
               className="min-w-0 flex-1 bg-transparent text-sm font-bold text-black outline-none placeholder:text-zinc-400"
             />
           </div>

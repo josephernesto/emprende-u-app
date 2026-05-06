@@ -1,8 +1,8 @@
-import { ArrowLeft, LockKeyhole, UserRound } from 'lucide-react'
+import { ArrowLeft, IdCard, LockKeyhole } from 'lucide-react'
 import { useState } from 'react'
 
 const initialForm = {
-  fullName: '',
+  studentCode: '',
   password: '',
 }
 
@@ -21,7 +21,7 @@ function StudentLogin({ onBack, onLogin, onCreateAccount }) {
     const success = onLogin(form)
 
     if (!success) {
-      setError('Nombre completo o contraseña incorrectos.')
+      setError('CodigoEstudiante o contraseña incorrectos.')
     }
   }
 
@@ -44,22 +44,24 @@ function StudentLogin({ onBack, onLogin, onCreateAccount }) {
           Iniciar sesión
         </h1>
         <p className="mt-4 text-sm font-medium leading-relaxed text-zinc-500">
-          Ingresa el nombre y apellido que usaste al registrarte.
+          Ingresa tu CodigoEstudiante y tu contraseña.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4">
           <label className="block">
             <span className="mb-2 block text-sm font-extrabold text-black">
-              Nombre y apellido
+              CodigoEstudiante
             </span>
             <div className="flex h-14 items-center gap-3 rounded-2xl bg-white px-4 shadow-sm">
-              <UserRound size={20} className="shrink-0 text-orange-500" />
+              <IdCard size={20} className="shrink-0 text-orange-500" />
               <input
                 type="text"
-                value={form.fullName}
-                onChange={(event) => updateField('fullName', event.target.value)}
+                value={form.studentCode}
+                onChange={(event) =>
+                  updateField('studentCode', event.target.value)
+                }
                 required
-                placeholder="Ej. Alvaro Vasquez"
+                placeholder="Ej. U1111111"
                 className="min-w-0 flex-1 bg-transparent text-sm font-bold text-black outline-none placeholder:text-zinc-400"
               />
             </div>

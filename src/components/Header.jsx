@@ -1,4 +1,5 @@
 import {
+  Camera,
   ClipboardList,
   LogOut,
   MapPin,
@@ -62,6 +63,17 @@ function Header({
   cartCount = 0,
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [profilePhoto, setProfilePhoto] = useState('')
+
+  const handlePhotoChange = (event) => {
+    const file = event.target.files?.[0]
+
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = () => setProfilePhoto(String(reader.result))
+    reader.readAsDataURL(file)
+  }
 
   return (
     <>
@@ -127,10 +139,35 @@ function Header({
             </div>
 
             <div className="mt-6 rounded-[26px] bg-white p-4 shadow-sm">
-              <div className="grid h-14 w-14 place-items-center rounded-2xl bg-orange-500 text-white">
-                <UserRound size={27} strokeWidth={2.5} />
-              </div>
-              <h3 className="mt-4 text-base font-black uppercase leading-tight text-black">
+              <label className="relative block h-20 w-20 cursor-pointer">
+                <span className="grid h-20 w-20 overflow-hidden rounded-[24px] bg-orange-500 text-white">
+                  {profilePhoto ? (
+                    <img
+                      src={profilePhoto}
+                      alt="Foto de perfil"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <span className="grid place-items-center">
+                      <UserRound size={34} strokeWidth={2.5} />
+                    </span>
+                  )}
+                </span>
+                <span className="absolute -bottom-1 -right-1 grid h-8 w-8 place-items-center rounded-xl border-2 border-white bg-black text-white">
+                  <Camera size={15} strokeWidth={2.5} />
+                </span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoChange}
+                  className="hidden"
+                />
+              </label>
+
+              <p className="mt-3 text-xs font-black uppercase tracking-[0.14em] text-orange-500">
+                Toca la foto para cambiarla
+              </p>
+              <h3 className="mt-3 text-base font-black uppercase leading-tight text-black">
                 {user.name}
               </h3>
               <p className="mt-2 text-sm font-semibold leading-snug text-zinc-500">

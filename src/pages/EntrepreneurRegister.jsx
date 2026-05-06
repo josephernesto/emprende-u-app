@@ -1,6 +1,7 @@
 import {
   ArrowLeft,
   BadgeCheck,
+  Store,
   LockKeyhole,
   Phone,
   UserRound,
@@ -10,6 +11,7 @@ import { useState } from 'react'
 import { universities } from '../data/mockData'
 
 const initialForm = {
+  businessName: '',
   firstName: '',
   lastName: '',
   age: '',
@@ -92,6 +94,7 @@ function EntrepreneurRegister({ onBack, onRegister }) {
 
     onRegister({
       ...form,
+      businessName: form.businessName.trim(),
       firstName: form.firstName.trim(),
       lastName: form.lastName.trim(),
       phone: form.phone.trim(),
@@ -127,6 +130,25 @@ function EntrepreneurRegister({ onBack, onRegister }) {
       </section>
 
       <form onSubmit={handleSubmit} className="mt-5 flex flex-1 flex-col gap-3">
+        <label className="block">
+          <span className="mb-1.5 block text-sm font-extrabold text-black">
+            Nombre del emprendimiento
+          </span>
+          <div className="flex h-[50px] items-center gap-3 rounded-2xl bg-white px-4 shadow-sm">
+            <Store size={19} className="shrink-0 text-orange-500" />
+            <input
+              type="text"
+              value={form.businessName}
+              onChange={(event) =>
+                updateField('businessName', event.target.value)
+              }
+              required
+              placeholder="Ej. Dulce Aula"
+              className="min-w-0 flex-1 bg-transparent text-sm font-bold text-black outline-none placeholder:text-zinc-400"
+            />
+          </div>
+        </label>
+
         <label className="block">
           <span className="mb-1.5 block text-sm font-extrabold text-black">
             Nombres
